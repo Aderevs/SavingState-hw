@@ -1,0 +1,27 @@
+﻿@* @{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+ *@
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Save Data</h2>
+
+@using (Html.BeginForm("SaveData", "Home", FormMethod.Post))
+{
+    <div>
+        <label for="value">Value:</label>
+        <input type="text" name="value" id="value" />
+    </div>
+    <div>
+        <label for="expirationDate">Expiration Date:</label>
+        <input type="datetime-local" name="expirationDate" id="expirationDate" />
+    </div>
+    <button type="submit">Save</button>
+}
