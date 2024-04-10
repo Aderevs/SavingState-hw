@@ -6,27 +6,56 @@ namespace Task1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        static int usersNumber = 0;
+        static List<string> currentSessionIds = new();
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
 
+
+        //[HttpGet]
         public IActionResult Index()
         {
-            return View();
+            HttpContext.Session.SetInt32("key", usersNumber++);
+            string currentSessionId = HttpContext.Session.Id;
+            if (!currentSessionIds.Contains(currentSessionId))
+            {
+                currentSessionIds.Add(currentSessionId);
+            }
+            /*var test = HttpContext.Session;
+            if (!currentSessions.Contains(test))
+            {
+                currentSessions.Add(HttpContext.Session);
+            }
+            var def = default(ISession);
+            var res = currentSessions.Find(s => !s.IsAvailable);
+            //if (currentSessions.Find(s => !s.IsAvailable) == default(ISession))
+            if (res != def)
+            {
+                foreach (var session in currentSessions)
+                {
+                    if (!session.IsAvailable)
+                    {
+                        currentSessions.Remove(session);
+                    }
+                }
+            }*/
+            //return View(_userCounter.UserCount);
+            return View(currentSessionIds.Count);
+            //return View(usersNumber);
         }
-
         public IActionResult Privacy()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+/*
+        public void IncrementOnlineUsersCount()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            usersNumber++;
         }
+
+        public void DecrementOnlineUsersCount()
+        {
+            usersNumber--;
+        }*/
     }
 }
